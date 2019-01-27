@@ -1,2 +1,2 @@
-# wordguess-cli
-A word guess command-line game
+# Wordguess CLI
+A word guess command line game played.
