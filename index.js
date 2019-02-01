@@ -126,8 +126,10 @@ function initiateNewWord() {
 
 // Function that plays through a round (which is a single word).
 function playRound() {
-    const word = new Word("MURRAY");
+    const randomWord = "murray";
+    const word = new Word(randomWord);
     const round = new Round();
+    round.setCurrentWord(randomWord);
 
     // Display the guessable word at the start of the round.
     console.log("\n" + word.returnString() + "\n");
@@ -144,25 +146,55 @@ function playRound() {
                 type: "input",
                 validate: function(value) {
                     const pass = value.match(
-                        /([A-Za-z]+)/i
+                        /(^[a-zA-Z]$)/i
                     );
                     
                     // For Friday: Add some extra validation here that also says whether the guess has already been made.
                     if (pass) return true;
-                    return "Please enter a valid entry.";
+                    return "Please enter a valid character (one letter a time).";
                 }
             }
         ])
         .then(function(response) {
-            const letters = word.characters;
-            // console.log(letters[0].guessed); // For accessing individual letter status.
+            const preGuessTrue = word.returnNumberTrue();
 
+            if (round.lettersGuessed.includes(response.guess)) {
+                console.log("\n" + word.returnString() + "\n");
+                console.log("That letter has already been guessed. Guess again!\n");
+                console.log(`Guesses Remaining: ${round.guessesRemaining}\n`);
+                return guess();
+            }
+
+            round.lettersGuessed.push(response.guess);
             word.checkForCharacter(response.guess);
-            // For Friday: If the guess is correct (ie the number of "trues" has increased by 1, then display the result and then have them guess again. Also, push that letter to the already guessed array.
 
-            // For Friday: If the guess is wrong (ie the number of "trues" has not increased, then display the result and then have them guess again.)
+            const postGuessTrue = word.returnNumberTrue();
 
-            console.log("\n" + word.returnString() + "\n");
+            if (postGuessTrue > preGuessTrue) {
+                console.log("\n" + word.returnString() + "\n");
+                console.log("Correct!\n");
+                console.log(`Guesses Remaining: ${round.guessesRemaining}\n`);
+            } else {
+                console.log("\n" + word.returnString() + "\n");
+                console.log("Incorrect!\n");
+                round.guessesRemaining--;
+                console.log(`Guesses Remaining: ${round.guessesRemaining}\n`);
+            }
+
+            if (round.guessesRemaining <= 0) {
+                console.log(`You're out of guesses! The word was "${round.currentWord}." Sending you to the main menu...\n`);
+                gameStats.wordsGuessedIncorrect.push(round.currentWord);
+                gameStats.losses++;
+                return initiateNewWord();
+            }
+
+            if (word.returnNumberTrue() === round.currentWord.length) {
+                console.log(`That's right! The word was "${round.currentWord}." Sending you to the main menu...\n`);
+                gameStats.wordsGuessedCorrect.push(round.currentWord);
+                gameStats.wins++;
+                return initiateNewWord();
+            }
+            
             guess();
         })
         .catch(error => console.log(error));

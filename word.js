@@ -25,6 +25,18 @@ const Word = function(randomWord) {
         }
        
     };
+
+    this.returnNumberTrue = function() {
+
+        let numTrue = 0;
+        for (let i = 0; i < this.characters.length; i++) {
+            if (this.characters[i].guessed) {
+                numTrue++;
+            };
+        }
+        return numTrue;
+
+    }
     
 }
 
@@ -32,15 +44,24 @@ module.exports = Word;
 
 // let test = new Word("pizza");
 // console.log(test.returnString());
+// console.log(test.returnNumberTrue());
+
 // test.checkForCharacter("I");
 // console.log(test.characters);
 // console.log(test.returnString());
+// console.log(test.returnNumberTrue());
+
 // test.checkForCharacter("p");
 // console.log(test.characters);
 // console.log(test.returnString());
+// console.log(test.returnNumberTrue());
+
 // test.checkForCharacter("z");
 // console.log(test.characters);
 // console.log(test.returnString());
+// console.log(test.returnNumberTrue());
+
 // test.checkForCharacter("q");
 // console.log(test.characters);
 // console.log(test.returnString());
+// console.log(test.returnNumberTrue());

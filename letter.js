@@ -15,8 +15,6 @@ const Letter = function(character) {
     if (this.character === guess.toLowerCase()) {
         return this.guessed = true;
       }
-      
-      this.guessed = false;
   }
 }
 
