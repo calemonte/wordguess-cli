@@ -28,6 +28,8 @@ const Word = function(randomWord) {
     
 }
 
+module.exports = Word;
+
 // let test = new Word("pizza");
 // console.log(test.returnString());
 // test.checkForCharacter("I");
