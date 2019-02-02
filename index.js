@@ -3,6 +3,7 @@
 const Word = require("./word");
 const inquirer = require("inquirer");
 const fs = require("fs");
+const chalk = require("chalk");
 
 // Object for storing the entire game stats.
 var gameStats = {
@@ -26,20 +27,26 @@ function Round() {
 
 // Function for displaying the current game's stats. Takes in 0 arguments. Outputs multiple lines of stats to the console. Terminates with call to display the options menu again.
 function showStats() {
-    console.log("\n----------\nYOUR STATS\n----------\n");
-    console.log(`Wins: ${gameStats.wins}`);
-    console.log(`Losses: ${gameStats.losses}`);
+    console.log(
+        chalk.keyword('gold')("\n----------\nYOUR STATS\n----------\n")
+    );
+    console.log(chalk`{bold Wins}: ${gameStats.wins}`);
+    console.log(chalk`{bold Losses}: ${gameStats.losses}`);
 
     if (!gameStats.wordsGuessedCorrect.length) {
-        console.log(`Words Guessed Correctly: None`);
+        console.log(chalk`{bold Words Guessed Correctly}: None`);
     } else {
-        console.log(`Words Guessed Correctly: ${gameStats.wordsGuessedCorrect.join(", ")}`);
+        console.log(
+            chalk`{bold Words Guessed Correctly}: ${gameStats.wordsGuessedCorrect.join(", ")}`
+        );
     }
 
     if (!gameStats.wordsGuessedIncorrect.length) {
-        console.log(`Words Guessed Incorrectly: None\n`);
+        console.log(chalk`{bold Words Guessed Incorrectly}: None\n`);
     } else {
-        console.log(`Words Guessed Incorrectly: ${gameStats.wordsGuessedIncorrect.join(", ")}\n`);
+        console.log(
+            chalk`{bold Words Guessed Incorrectly}: ${gameStats.wordsGuessedIncorrect.join(", ")}\n`
+        );
     }
 
     showSideBarOptions();
@@ -89,7 +96,9 @@ function showSideBarOptions() {
 
 // Function that can start the game off.
 function initiateNewWord() {
-    console.log("\n--------------------\nWELCOME TO WORD GUESS\n--------------------\n");
+    console.log(
+        chalk.keyword('gold')("\n---------------------\nWELCOME TO WORD GUESS\n---------------------\n")
+    );
     inquirer.prompt([
         {
             name: "start",
@@ -131,10 +140,8 @@ function playRound() {
     const round = new Round();
     round.setCurrentWord(randomWord);
 
-    // Display the guessable word at the start of the round.
+    // Start the round.
     console.log("\n" + word.returnString() + "\n");
-
-    // For Friday: Fix this logic for handling 
     guess();
 
     // Nested function that handles the individual guessing of a character.
@@ -149,7 +156,6 @@ function playRound() {
                         /(^[a-zA-Z]$)/i
                     );
                     
-                    // For Friday: Add some extra validation here that also says whether the guess has already been made.
                     if (pass) return true;
                     return "Please enter a valid character (one letter a time).";
                 }
@@ -160,7 +166,9 @@ function playRound() {
 
             if (round.lettersGuessed.includes(response.guess)) {
                 console.log("\n" + word.returnString() + "\n");
-                console.log("That letter has already been guessed. Guess again!\n");
+                console.log(
+                    chalk.keyword('orange')("That letter has already been guessed. Guess again!\n")
+                );
                 console.log(`Guesses Remaining: ${round.guessesRemaining}\n`);
                 return guess();
             }
@@ -172,24 +180,28 @@ function playRound() {
 
             if (postGuessTrue > preGuessTrue) {
                 console.log("\n" + word.returnString() + "\n");
-                console.log("Correct!\n");
+                console.log(chalk.green("Correct!\n"));
                 console.log(`Guesses Remaining: ${round.guessesRemaining}\n`);
             } else {
                 console.log("\n" + word.returnString() + "\n");
-                console.log("Incorrect!\n");
+                console.log(chalk.red("Incorrect!\n"));
                 round.guessesRemaining--;
                 console.log(`Guesses Remaining: ${round.guessesRemaining}\n`);
             }
 
             if (round.guessesRemaining <= 0) {
-                console.log(`You're out of guesses! The word was "${round.currentWord}." Sending you to the main menu...\n`);
+                console.log(
+                    chalk.red(`You're out of guesses! The word was "${round.currentWord}." Sending you to the main menu...\n`)
+                );
                 gameStats.wordsGuessedIncorrect.push(round.currentWord);
                 gameStats.losses++;
                 return initiateNewWord();
             }
 
             if (word.returnNumberTrue() === round.currentWord.length) {
-                console.log(`That's right! The word was "${round.currentWord}." Sending you to the main menu...\n`);
+                console.log(
+                    chalk.green(`That's right! The word was "${round.currentWord}." Sending you to the main menu...\n`)
+                );
                 gameStats.wordsGuessedCorrect.push(round.currentWord);
                 gameStats.wins++;
                 return initiateNewWord();
@@ -204,25 +216,26 @@ function playRound() {
 
 
 
-
-
-
-
-
-// function returnRandomWord() {
-//     let randomWord = "";
+// function grabRandomWord(callback) {
     
 //     fs.readFileSync("random.txt", "utf8", function(error, data) {
 //         if (error) return console.log(error);
-
+    
 //         const dataArray = data.trim().split("\n");
 //         const randomArrayLocation = Math.floor(Math.random() * dataArray.length);
+    
+//         const randomWord = dataArray[randomArrayLocation];
 
-//         randomWord = dataArray[randomArrayLocation];
+//         callback(randomWord);
 //     });
 
+// }
+
+// function returnRandomWord(randomWord) {
 //     return randomWord;
 // }
+
+// grabRandomWord(returnRandomWord);
 
 // const randomWord = function() {
 
