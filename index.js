@@ -13,7 +13,14 @@ var gameStats = {
     wordsGuessedIncorrect: [],
 }
 
+// Start the game off.
 initiateNewWord();
+
+/*
+=========
+FUNCTIONS
+=========
+*/
 
 // Constructor for creating a new round for guessing.
 function Round() {
@@ -34,7 +41,7 @@ function showStats() {
     console.log(chalk`{bold Losses}: ${gameStats.losses}`);
 
     if (!gameStats.wordsGuessedCorrect.length) {
-        console.log(chalk`{bold Words Guessed Correctly}: None`);
+        console.log(chalk`{bold Words Guessed Correctly}: n/a`);
     } else {
         console.log(
             chalk`{bold Words Guessed Correctly}: ${gameStats.wordsGuessedCorrect.join(", ")}`
@@ -42,7 +49,7 @@ function showStats() {
     }
 
     if (!gameStats.wordsGuessedIncorrect.length) {
-        console.log(chalk`{bold Words Guessed Incorrectly}: None\n`);
+        console.log(chalk`{bold Words Guessed Incorrectly}: n/a\n`);
     } else {
         console.log(
             chalk`{bold Words Guessed Incorrectly}: ${gameStats.wordsGuessedIncorrect.join(", ")}\n`
@@ -135,7 +142,10 @@ function initiateNewWord() {
 
 // Function that plays through a round (which is a single word).
 function playRound() {
-    const randomWord = "murray";
+    const allWords = fs.readFileSync("random.txt", "utf8");
+    const allWordsArray = allWords.trim().split("\n");
+    const randomWord = allWordsArray[Math.floor(Math.random() * allWordsArray.length)];
+
     const word = new Word(randomWord);
     const round = new Round();
     round.setCurrentWord(randomWord);
@@ -200,7 +210,7 @@ function playRound() {
 
             if (word.returnNumberTrue() === round.currentWord.length) {
                 console.log(
-                    chalk.green(`That's right! The word was "${round.currentWord}." Sending you to the main menu...\n`)
+                    chalk.green(`That's right! The word was "${round.currentWord}." Sending you to the main menu...`)
                 );
                 gameStats.wordsGuessedCorrect.push(round.currentWord);
                 gameStats.wins++;
@@ -213,39 +223,3 @@ function playRound() {
     }
     
 }
-
-
-
-// function grabRandomWord(callback) {
-    
-//     fs.readFileSync("random.txt", "utf8", function(error, data) {
-//         if (error) return console.log(error);
-    
-//         const dataArray = data.trim().split("\n");
-//         const randomArrayLocation = Math.floor(Math.random() * dataArray.length);
-    
-//         const randomWord = dataArray[randomArrayLocation];
-
-//         callback(randomWord);
-//     });
-
-// }
-
-// function returnRandomWord(randomWord) {
-//     return randomWord;
-// }
-
-// grabRandomWord(returnRandomWord);
-
-// const randomWord = function() {
-
-//         fs.readFile("random.txt", "utf8", function(error, data) {
-//         if (error) return console.log(error);
-
-//         const dataArray = data.trim().split("\n");
-//         const randomArrayLocation = Math.floor(Math.random() * dataArray.length);
-
-//         return dataArray[randomArrayLocation];
-//     });
-
-// }

@@ -41,27 +41,3 @@ const Word = function(randomWord) {
 }
 
 module.exports = Word;
-
-// let test = new Word("pizza");
-// console.log(test.returnString());
-// console.log(test.returnNumberTrue());
-
-// test.checkForCharacter("I");
-// console.log(test.characters);
-// console.log(test.returnString());
-// console.log(test.returnNumberTrue());
-
-// test.checkForCharacter("p");
-// console.log(test.characters);
-// console.log(test.returnString());
-// console.log(test.returnNumberTrue());
-
-// test.checkForCharacter("z");
-// console.log(test.characters);
-// console.log(test.returnString());
-// console.log(test.returnNumberTrue());
-
-// test.checkForCharacter("q");
-// console.log(test.characters);
-// console.log(test.returnString());
-// console.log(test.returnNumberTrue());
