@@ -23,7 +23,7 @@ From the main menu, select if you want to play a new word or view the options.
 
 ![Screenshot of the main WordGuess main menu](/assets/landingpage.png "Screenshot of the main WordGuess landing page.")
 
-Selecting a new word will display a series of underlines representing the individual letters in a word. There is no theme for the game; the words fairly generic/basic and are stored as plain-text in the random.txt file. 
+Selecting a new word will display a series of underlines representing the individual letters in a word. There is no theme for the game; the words are all fairly generic/basic and are drawn from the random.txt file. 
 
 ![Screenshot of the new word display](/assets/newword.png "Screenshot of the new word display.")
 
@@ -53,4 +53,4 @@ This was built by Kenny Whitebloom (https://github.com/calemonte) as part of a c
 
 ## Notes
 
-This was my first foray into using JavaScript constructors, which is used to generate the individual letter and word objects. 
+This was my first foray into using JavaScript constructors, which are used to generate the individual letter and word objects. 
