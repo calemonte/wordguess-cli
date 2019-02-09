@@ -37,7 +37,7 @@ The options menu lets you view your stats for the entire game session (not just 
 
 ![Screenshot of the stats menu](/assets/stats.png "Screenshot of the stats menu.")
 
-That's it! Enjoy!
+That's it! For a video demonstration of the application in action, [click here](https://drive.google.com/file/d/1lasMgh0hmyJG0Xla7kohfi0lftif6_2A/view?usp=sharing). Enjoy!
 
 ## Technologies Used
 
