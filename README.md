@@ -1,3 +1,5 @@
+![Detail of the Word Guess command line application intro text.](./assets/wordguess.png  "Detail of the Word Guess command line application intro text.")
+
 # WordGuess CLI Game
 A node word guess game played in the command line. Makes use of the Inquirer package to provide an easy to use CLI interface, including the ability to view game stats.
 
